@@ -23,6 +23,7 @@ class CardSchema(ma.Schema):
 
     class Meta: # this is serializing the data
             fields = ('id', 'title', 'description', 'date', 'status', 'priority', 'user')
+            ordered=True
 
 card_schema = CardSchema()
 cards_schema = CardSchema(many=True)
