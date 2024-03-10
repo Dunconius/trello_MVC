@@ -61,4 +61,3 @@ def auth_login():
         # return error
         return {"error": "Invalid email or password"}, 401 # The 401 Unauthorized.
     
-# asjhdaksjhdkasd
