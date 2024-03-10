@@ -15,4 +15,11 @@ def create_app():
     bcrypt.init_app(app)
     jwt.init_app(app)
 
+    # importing from the controllers file. Registered the blueprint with the flask app instance
+    from controllers.cli_controller import db_commands
+    app.register_blueprint(db_commands)
+
+    from controllers.auth_controller import auth_bp
+    app.register_blueprint(auth_bp)
+
     return app
