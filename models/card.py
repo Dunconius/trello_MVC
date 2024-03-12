@@ -15,14 +15,16 @@ class Card(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False) # when adding foreign keys, will always be int (as its the ID#)
 
     # -------------name of the User Class
-    user = db.relationship('User', back_populates='cards')
+    user = db.relationship('User', back_populates='cards') # a user can have multiple cards
+    comments = db.relationship('Comment', back_populates='card') # a comment can only have a single card
 
 class CardSchema(ma.Schema):
     # in order for marshmallow to serialise the user field we need to tell it that it's a relationship
     user = fields.Nested('UserSchema', only = ['name', 'email'])
+    comments = fields.List(fields.Nested("CommentSchema", exclude=['card']))
 
     class Meta: # this is serializing the data
-            fields = ('id', 'title', 'description', 'date', 'status', 'priority', 'user')
+            fields = ('id', 'title', 'description', 'date', 'status', 'priority', 'user', 'comments')
             ordered=True
 
 card_schema = CardSchema()
