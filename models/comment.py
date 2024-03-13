@@ -8,7 +8,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     message = db.Column(db.Text)
 
-    # foreign fields ----------------------- table/field they come from
+    # foreign fields --------------------------- table/column they come from
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     card_id = db.Column(db.Integer, db.ForeignKey("cards.id"), nullable=False)
 
@@ -20,7 +20,7 @@ class CommentSchema(ma.Schema):
 
     user = fields.Nested('UserSchema', only=['name', 'email'])
 
-    card = fields.Nested('CardSchema', exclude=['comments]'])
+    card = fields.Nested('CardSchema', exclude=['comments'])
 
     class Meta:
         fields = ('id', 'message', 'user', 'card')

@@ -16,7 +16,7 @@ class Card(db.Model):
 
     # -------------name of the User Class
     user = db.relationship('User', back_populates='cards') # a user can have multiple cards
-    comments = db.relationship('Comment', back_populates='card') # a comment can only have a single card
+    comments = db.relationship('Comment', back_populates='card', cascade='all, delete') # a comment can only have a single card
 
 class CardSchema(ma.Schema):
     # in order for marshmallow to serialise the user field we need to tell it that it's a relationship
