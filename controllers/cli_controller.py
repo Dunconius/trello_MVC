@@ -1,3 +1,4 @@
+# CLI stands for command line interface (postgres commands)
 # commands for dropping tables and seeding the database
 from datetime import date
 
