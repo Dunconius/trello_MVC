@@ -1,5 +1,8 @@
 import os
 from flask import Flask
+#this allows us to handle all the errors at 1 point instead of using try-except everywhere
+from marshmallow.exceptions import ValidationError
+
 from init import db, ma, bcrypt, jwt
 
 def create_app():
@@ -17,6 +20,11 @@ def create_app():
     ma.init_app(app)
     bcrypt.init_app(app)
     jwt.init_app(app)
+
+    # global error handling function for validation errors
+    @app.errorhandler(ValidationError)
+    def validation_error(err):
+        return {"error": err.messages}, 400
 
     # importing from the controllers file. Registered the blueprint with the flask app instance
     from controllers.cli_controller import db_commands

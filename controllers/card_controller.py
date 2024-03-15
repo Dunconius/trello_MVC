@@ -33,7 +33,8 @@ def get_one_card(card_id):
 @cards_bp.route("/", methods=["POST"])
 @jwt_required()
 def create_card():
-    body_data = request.get_json()
+    # this will now use the validation specified in the card model
+    body_data = card_schema.load(request.get_json())
     # create new card model instance
     card = Card(
         title = body_data.get('title'),
@@ -72,7 +73,7 @@ def delete_card(card_id):
 @cards_bp.route("/<int:card_id>", methods=["PUT", "PATCH"])
 def update_card(card_id):
     # get the data to be updated from the request
-    body_data = request.get_json()
+    body_data = card_schema.load(request.get_json(), partial=True)
     # get the card from the db who needs to be update
     stmt = db.select(Card).filter_by(id=card_id)
     card = db.session.scalar(stmt)
